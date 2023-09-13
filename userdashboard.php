@@ -44,6 +44,7 @@ isUser($user->data()->groups);
         </nav>
 
         <div class="container mt-4 puff-in-center">
+          <h1> Hello User! <?php echo $user->data()->name ?> </h1>
           <?php $viewtable->viewApproveTable(); ?>
         </div>
 </body>
