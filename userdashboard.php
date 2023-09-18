@@ -33,8 +33,8 @@ isUser($user->data()->groups);
 <body>
 
         <nav class="navbar navbar-dark bg-white shadow-sm slide-in-left">
-          <a class="navbar-brand" href="https://malolos.ceu.edu.ph/">
-            <img src="resource/img/logo.jpg" height="70" class="d-inline-block align-top"
+          <a class="navbar-brand" href="https://www.tesda.gov.ph//">
+            <img src="resource/img/logo2.png" height="70" class="d-inline-block align-top"
               alt="mdb logo"><h3 class="ib">
           </a>
              <a href="pending.php"><i class="fas fa-home ceucolor"></i></a>
@@ -42,12 +42,11 @@ isUser($user->data()->groups);
              <a href="https://www.instagram.com/ceuofficial/"><i class="fab fa-instagram ceucolor"></i></a>
              <a href="https://twitter.com/ceumalolos"><i class="fab fa-twitter ceucolor"></i></a>
         </nav>
-
         <div class="container mt-4 puff-in-center">
           <h1> Hello User! <?php echo $user->data()->name ?> </h1>
           <?php $viewtable->viewApproveTable(); ?>
         </div>
-</body>
+</body> 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="vendor/js/bootstrap.min.js"></script>
