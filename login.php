@@ -1,6 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/toe/resource/php/class/core/init.php';
-
+ 
  ?>
 
 <!DOCTYPE html>
@@ -14,9 +14,10 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/toe/resource/php/class/core/init.php';
   <link rel="stylesheet" type="text/css"  href="resource/css/styles.css">
 </head>
 <body>
-        <nav class="navbar navbar-dark bg-white shadow-sm slide-in-left">
-          <a class="navbar-brand " href="https://malolos.ceu.edu.ph/">
-            <img src="resource/img/logo.jpg" height="70" class="d-inline-block align-top"
+  <section class="section3">
+        <nav class="navbar navbar-dark bg-black shadow-sm slide-in-left">
+          <a class="navbar-brand " href="https://www.tesda.gov.ph//">
+            <img src="resource/img/tesda3.jpeg" height="80" class="d-inline-block align-top"
               alt="mdb logo"><h3 class="ib">
           </a>
              <a href="https:/www.facebook.com/theCEUofficial/"><i class="fab fa-facebook-f ceucolor"></i></a>
@@ -29,7 +30,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/toe/resource/php/class/core/init.php';
 
 
 
-                    <form class="text-center border border-light p-5 shadow puff-in-center" action="" method="post" >
+                    <form class="text-center  p-5 shadow puff-in-center" action="" method="post" >
                     <p class="h4 mb-4">Sign in</p>
                     <?php logd();?>
                     <input type="text" id="username" class="form-control mb-4" name="username" placeholder="Enter Username" required>
@@ -39,8 +40,8 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/toe/resource/php/class/core/init.php';
                     <input type =hidden name="token" value="<?php echo Token::generate(); ?>">
                     <input  type="submit"  class="btn btn-dark btn-block my-4"value="Login"/>
                     </form>
-
-
+          </section>
+ 
                     <footer id="sticky-footer" class="py-4 bg-dark text-white-50 fixed-bottom slide-in-right">
                       <div class="container text-center">
                           <div class="row">

@@ -1,10 +1,90 @@
 .st{
     font-size: 16px;
 }
-.btt{
+.btt{ 
     margin-top:50%;
     margin-bottom:50%;
 }
+
+.main-nav{
+        float: right;
+        list-style: none;
+        margin-top: 10px;
+      
+      }
+      .main-nav li{
+        display: inline-block;
+        margin-left: 50px;
+      }
+      .main-nav a:visited,
+      .main-nav a:link{
+        text-decoration: none;
+        color: rgb(194, 116, 8);
+        text-transform: uppercase;
+        font-size: 70%;
+        letter-spacing: 1px;
+        transition: 0.5s;
+      }
+      .main-nav a:active,
+      .main-nav a:hover{
+        border-bottom: 2px solid #e67e22;
+        transition: 0.5s;
+      }
+.tesda1{
+        text-align: center;
+}
+.tesda2{
+        text-align: center;
+}
+.section1{
+        height: 80;
+        background-image: url(../img/tesda2.jpg);
+        background-size:cover;
+}      
+.header{
+        height: 10vh;
+        background-color: #2c0ba3;
+}
+.header h1{
+        color: #fff;
+        text-align: center;
+        font-size: 50px;
+}
+.section2{
+        height: 100vh;
+         
+        background-size:cover;
+        background-image: linear-gradient(rgba(10,10,10,0.7),rgba(15,15,15,0.7)), url(../img/tesda4.jpg);
+}       
+.vmgo{
+  margin-left: 3%;
+  color: #fff;
+      
+}
+.section3{
+        height: 100vh;     
+        background-size:cover;
+        
+}
+.section4{
+        height: 100vh;
+        background-color: #fff;
+        
+}
+.header4{
+        height: 10vh;
+        background-color: rgb(10, 10, 148);
+        color: #fff     ;
+}
+.header2{
+        height: 10vh;
+        background-color:#2e139c;
+        color: #fff;
+}
+.row2{
+        height: 2vh;
+}
+
 .inl2{
     display:none;
 }
@@ -50,30 +130,38 @@
 	        animation: heartbeat 1.5s ease-in-out infinite both;
 }
 
-.row {
+.row{
+  
   margin-left: 0;
   margin-right: 0;
 }
+
 .ib{
     display: inline-block;
     margin-left: 15px;
 }
 .ceucolor{
-    color:#DC65A1;
+    color:#250b80;
     margin-right: 3rem;
 }
 .ceucolor2{
-    color:#DC65A1;
+    color:#300984;
     font-weight: bold;
 }
+.tesdacolor{
+        color: #e49312;
+}
+
+
 .bg2{
 
 }
+
 .btn.ceubtn,
 .btn.ceubtn:hover,
 .btn.ceubtn:active
 {
-    color: #f8f9fa;
+    color: #0c0d0d;
     border-color: #DC65A1;
     background-color:#DC65A1;
 }
@@ -92,6 +180,7 @@ header{
     height:100vh;
     background-image: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75));
     background-size: cover;
+    
 }
 
 .alumni{
@@ -99,13 +188,18 @@ header{
 }
 
 .jumbotron {
-  background-color: rgba(0,0,0,0.2);
-  border: 1px solid  rgba(255, 255, 255, 0.3);
-  color:#FFF;
+  background-color: #d8e7fb;
+  border: 1px solid  rgba(9, 23, 224, 0.3);
+  color:#060606;
   padding-top: 3%;
+  margin-top: -8%;
+   
+  
 }
+
+
 .bottomline{
-    border-bottom: 1px solid white ;
+    border-bottom: 1px solid rgb(12, 34, 198) ;
     padding-bottom: 3%;
     margin-bottom: 3%;
 }
@@ -116,9 +210,9 @@ header{
 .btn-outline-light:hover,
 .btn-outline-light:active
 {
-    color: #f8f9fa;
-    border-color: #DC65A1;
-    background-color:#DC65A1;
+    color: #080809;
+    border-color: #0f0e0f;
+    background-color:#c3bad8;
 }
 
 /* Alumni Portal  */
@@ -132,7 +226,7 @@ header{
 .jumbotrona {
   background-color: rgba(0,0,0,0.5);
   border: 1px solid  rgba(255, 255, 255, 0.3);
-  color:#FFF;
+  color:#070707;
   padding-top: 3%;
 }
 
@@ -143,7 +237,7 @@ header{
  {
     background-color: transparent;
     border: 0px solid;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid rgb(186, 15, 15);
 
 }
 
@@ -349,6 +443,7 @@ header{
    footer{
        visibility: hidden;
    }
+   
 
 }
 @media (min-width: 1320px) {

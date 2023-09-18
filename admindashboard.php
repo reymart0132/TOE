@@ -3,7 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/toe/resource/php/class/core/init.php';
 isLogin();
 $viewtable = new viewtable();
 $user = new user();
-isAdmin($user->data()->groups);
+isAdmin($user->data()->groups); 
  ?>
 <!DOCTYPE html>
 <html lang="en">
