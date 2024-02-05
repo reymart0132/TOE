@@ -1,4 +1,42 @@
 <?php
+function CheckSuccessQuestion($status){
+    if($status =='q1'){
+        echo '<div class="alert alert-success alert-dismissible fade show col-12" role="alert">
+                <b>Congratulations!</b> You have successfully inserted the question to the database!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>';
+    }elseif($status =='qa'){
+        echo '<div class="alert alert-success alert-dismissible fade show col-12" role="alert">
+                <b>Congratulations!</b> You have successfully activated the question it will now appear on the exams!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>';
+    }elseif($status =='qd'){
+        echo '<div class="alert alert-warning alert-dismissible fade show col-12" role="alert">
+                <b>Warning!</b> You have successfully deactivated the question it will not appear on the exams!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>';
+    }elseif($status =='qdel'){
+        echo '<div class="alert alert-danger alert-dismissible fade show col-12" role="alert">
+                <b>Warning!</b> You have successfully deleted the question!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>';
+    }else{
+        echo '<div class="alert alert-danger alert-dismissible fade show col-12" role="alert">
+                <b>Warning!</b>Error Occured Please contact the developers!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>';
+    }
+}
 function CheckSuccess($status){
     if($status =='Success'){
         echo '<div class="alert alert-success alert-dismissible fade show col-12" role="alert">
@@ -12,7 +50,7 @@ function CheckSuccess($status){
 
 function Success(){
     echo '<div class="alert alert-success alert-dismissible fade show col-12" role="alert">
-            <b>Congratulations!</b> You have successfully registered a new Student Records Assistant!
+            <b>Congratulations!</b> You have successfully registered! Please Proceed to Login Page.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -68,45 +106,60 @@ function vald(){
                 'required'=>'true',
                 'matches'=>'password'
             ),
-            'fullName'=>array(
+            'firstName'=>array(
+                'required'=>'true'
+            ),
+            'lastName'=>array(
+                'required'=>'true'
+            ),
+            'contactNumber'=>array(
                 'required'=>'true',
-                'min'=>2,
-                'max'=>50,
             ),
             'email'=>array(
                 'required'=>'true'
             ),
             'College'=>array(
                 'required'=>'true'
+            ),
+            'age'=>array(
+                'required'=>'true'
+            ),
+            'gender'=>array(
+                'required'=>'true'
+            ),
+            'fullAddress'=>array(
+                'required'=>'true'
+            ),
+            'town' => array(
+                'required' => 'true'
             )));
 
             if($validate->passed()){
                 $user = new user();
                 $salt = Hash::salt(32);
                 try {
+                    $code = rand(1234,9999);
+                    
+                    
                     $user->create(array(
                         'username'=>Input::get('username'),
                         'password'=>Hash::make(Input::get('password'),$salt),
                         'salt'=>$salt,
-                        'name'=> Input::get('fullName'),
+                        'fname'=> Input::get('firstName'),
+                        'lname'=> Input::get('lastName'),
+                        'mname'=> Input::get('middleName'),
+                        'phone'=> Input::get('contactNumber'),
+                        'age'=> Input::get('age'),
+                        'gender'=> Input::get('gender'),
+                        'faddress'=> Input::get('fullAddress'),
                         'joined'=>date('Y-m-d H:i:s'),
                         'groups'=>1,
                         'colleges'=> Input::get('College'),
                         'email'=> Input::get('email'),
+                        'town'=> Input::get('town'),
+                        'code'=> $code
                     ));
 
-                    $user->createC(array(
-                        'checker'=> Input::get('fullName'),
-
-                    ));
-                    $user->createV(array(
-                        'verifier'=> Input::get('fullName'),
-                    ));
-
-                    $user->createR(array(
-                        'releasedby'=> Input::get('fullName'),
-
-                    ));
                 } catch (Exception $e) {
                     die($e->getMessage());
                 }
@@ -184,21 +237,10 @@ function updateProfile(){
 
         $validate = new Validate;
         $validate = $validate->check($_POST,array(
-            'username'=>array(
-                'required'=>'true',
-                'min'=>4,
-                'max'=>20,
-                'unique'=>'tbl_accounts'
-            ),
-            'fullName'=>array(
-                'required'=>'true',
-                'min'=>2,
-                'max'=>50,
-            ),
             'email'=>array(
                 'required'=>'true',
                 'min'=>5,
-                'max'=>50,
+                'max'=>500,
             ),
             'College'=>array(
                 'required'=>'true'
@@ -209,15 +251,20 @@ function updateProfile(){
 
                 try {
                     $user->update(array(
-                        'username'=>Input::get('username'),
-                        'name'=> Input::get('fullName'),
+                        'fname'=> Input::get('firstName'),
+                        'mname'=> Input::get('middleName'),
+                        'lname'=> Input::get('lastName'),
+                        'age'=> Input::get('age'),
+                        'phone'=> Input::get('phone'),
+                        'faddress'=> Input::get('faddress'),
                         'colleges'=> Input::get('College'),
-                        'email'=> Input::get('email')
+                        'email'=> Input::get('email'),
+                        'town'=> Input::get('town')
                     ));
                 } catch (Exception $e) {
                     die($e->getMessage());
                 }
-                Redirect::to('template.php');
+                Redirect::to('userdashboard.php');
             }else{
                 foreach ($validate->errors()as $error) {
                 pError($error);
@@ -258,7 +305,7 @@ function changeP(){
                     } catch (Exception $e) {
                         die($e->getMessage());
                     }
-                    Redirect::to('template.php');
+                    Redirect::to('logout.php');
                 }
             }else{
                 foreach ($validate->errors()as $error) {
@@ -278,6 +325,15 @@ function isUser($groups){
     }
 }
 
+function isActive($active)
+{
+    if ($active == "1") {
+
+    } else {
+        header('Location:activateuser.php');
+    }
+}
+
 function isAdmin($groups){
     if($groups==="0"){
 
@@ -286,5 +342,311 @@ function isAdmin($groups){
         echo 'You are not allowed to access this page!';
         exit;
     }
+}
+
+function getPassingScore($type){
+    $config = new config;
+    $con = $config->con();
+    $sql = "SELECT * FROM `examconfig` WHERE `exam_type` = '$type'";
+    $data = $con->prepare($sql);
+    $data->execute();
+    $result = $data->fetchAll(PDO::FETCH_ASSOC);
+    return $result[0]['passingscore'];
+}
+function getExamName($exam){
+    $config = new config;
+    $con = $config->con();
+    $sql = "SELECT * FROM `examconfig` WHERE `exam_type` = '$exam'";
+    $data = $con->prepare($sql);
+    $data->execute();
+    $result = $data->fetchAll(PDO::FETCH_ASSOC);
+    return $result[0]['value'];
+}
+function getExamDesc($exam){
+    $config = new config;
+    $con = $config->con();
+    $sql = "SELECT * FROM `examconfig` WHERE `exam_type` = '$exam'";
+    $data = $con->prepare($sql);
+    $data->execute();
+    $result = $data->fetchAll(PDO::FETCH_ASSOC);
+    return $result[0]['desc'];
+}
+function getExamDuration($exam){
+    $config = new config;
+    $con = $config->con();
+    $sql = "SELECT * FROM `examconfig` WHERE `exam_type` = '$exam'";
+    $data = $con->prepare($sql);
+    $data->execute();
+    $result = $data->fetchAll(PDO::FETCH_ASSOC);
+    return $result[0]['duration'];
+}
+
+function getQuestionCount($exam)
+{
+    $config = new config;
+    $con = $config->con();
+    $sql = "SELECT count(*) as `count` FROM `tbl_question` WHERE `type` = '$exam' AND `active` = 1";
+    $data = $con->prepare($sql);
+    $data->execute();
+    $result = $data->fetchAll(PDO::FETCH_ASSOC);
+    return $result[0]['count'];
+}
+
+function findUserCourse($id)
+{
+    $config = new config;
+    $con = $config->con();
+    $sql = "SELECT * FROM `tbl_accounts` WHERE `id`= '$id' ";
+    $data = $con->prepare($sql);
+    $data->execute();
+    $result = $data->fetchAll(PDO::FETCH_ASSOC);
+    return $result[0]['colleges'];
+}
+function findTowns()
+{
+    $config = new config;
+    $con = $config->con();
+    $sql = "SELECT DISTINCT town FROM `tbl_accounts` WHERE town IS NOT NULL";
+    $data = $con->prepare($sql);
+    $data->execute();
+    $result = $data->fetchAll(PDO::FETCH_ASSOC);
+    foreach($result as $town){
+        echo "<option value='$town[town]'>$town[town]</option>";
+    }
+}
+function findQuestionID()
+{
+    $config = new config;
+    $con = $config->con();
+    $sql = "SELECT DISTINCT `question_id` FROM `tbl_correct` UNION SELECT DISTINCT `question_id` FROM `tbl_incorrect`  ";
+    $data = $con->prepare($sql);
+    $data->execute();
+    $result = $data->fetchAll(PDO::FETCH_ASSOC);
+    foreach($result as $qid){
+        echo "<option value='$qid[question_id]'>Question-$qid[question_id]</option>";
+    }
+}
+// function getExamType($id){
+//     $config = new config;
+//     $con = $config->con();
+//     $sql = "SELECT * FROM `tbl_question` WHERE `id` = '$id'";
+//     $data = $con->prepare($sql);
+//     $data->execute();
+//     $result = $data->fetchAll(PDO::FETCH_ASSOC);
+//     return $result[0]['type'];
+// }
+
+function insertQuestion(){
+    if (isset($_REQUEST['submit'])) {
+        $content = $_REQUEST['content'];
+        $type = $_REQUEST['type'];
+        $choice1 = $_REQUEST['choice1'];
+        $choice2 = $_REQUEST['choice2'];
+        $choice3 = $_REQUEST['choice3'];
+        $choice4 = $_REQUEST['choice4'];
+        $choice5 = $_REQUEST['choice5'];
+        $answer = $_REQUEST['answer'];
+
+        $config = new config;
+        $con = $config->con();
+        $sql = "INSERT INTO `tbl_question` SET `question` = '$content',`type`='$type',`a`='$choice1',`b`='$choice2',`c`='$choice3',`d`='$choice4',`e`='$choice5',`answer`='$answer' ";
+        $data = $con->prepare($sql);
+        if ($data->execute()) {
+            $msg = "The new Question has been inserted!";
+            header('Location:eq.php?status=q1');
+        } else {
+            $msg = "Error";
+        }
+    }
+}
+
+
+function getTotalApplicant($date1=null,$date2=null)
+{
+    $config = new config;
+    $con = $config->con();
+    if($date1 !== null & $date2 !== null){
+        $sql ="SELECT DATE(`joined`) AS `dit`, COUNT(`id`) AS `tots`
+        FROM tbl_accounts
+        WHERE `groups` = 1 
+        AND DATE_FORMAT(`joined`, '%Y-%m') >= '$date1'
+        AND DATE_FORMAT(`joined`, '%Y-%m') <= '$date2'
+        GROUP BY DATE(`joined`)";
+        }else{
+
+            $sql = "SELECT DATE(`joined`) as `dit`,count(`id`) AS `tots` FROM tbl_accounts WHERE `groups` = 1 GROUP BY CAST(`joined` AS DATE)";
+        }
+    $data = $con->prepare($sql);
+    $data->execute();
+    $rows = $data->fetchAll(PDO::FETCH_ASSOC);
+    return $rows;
+}
+function getIncorrect($date1=null,$date2=null)
+{
+    $config = new config;
+    $con = $config->con();
+    if ($date1 !== null & $date2 !== null) {
+        $sql = "SELECT `question_id`,COUNT(*) as `count` FROM `tbl_incorrect` WHERE DATE_FORMAT(`answer_date`, '%Y-%m') >= '$date1'
+  AND DATE_FORMAT(`answer_date`, '%Y-%m') <= '$date2'
+GROUP BY `question_id`";
+    } else {
+        $sql = "SELECT `question_id`,COUNT(*) as `count` FROM `tbl_incorrect` GROUP BY `question_id`";
+    }
+    $data = $con->prepare($sql);
+    $data->execute();
+    $rows = $data->fetchAll(PDO::FETCH_ASSOC);
+    return $rows;
+}
+function getCorrect($date1=null,$date2=null)
+{
+    $config = new config;
+    $con = $config->con();
+    if ($date1 !== null & $date2 !== null) {
+        $sql = "SELECT `question_id`,COUNT(*) as `count` FROM `tbl_correct` WHERE DATE_FORMAT(`answer_date`, '%Y-%m') >= '$date1'
+  AND DATE_FORMAT(`answer_date`, '%Y-%m') <= '$date2'
+GROUP BY `question_id`";
+    } else {
+        $sql = "SELECT `question_id`,COUNT(*) as `count` FROM `tbl_correct` GROUP BY `question_id`";
+    }
+    $data = $con->prepare($sql);
+    $data->execute();
+    $rows = $data->fetchAll(PDO::FETCH_ASSOC);
+    return $rows;
+}
+function getTown($date1=null,$date2=null)
+{
+    $config = new config;
+    $con = $config->con();
+    if ($date1 !== null & $date2 !== null) {
+        $sql = "SELECT `town`, COUNT(*) AS `count`
+FROM `tbl_accounts`
+WHERE `groups` = 1 
+  AND DATE_FORMAT(`joined`, '%Y-%m') >= '$date1'
+  AND DATE_FORMAT(`joined`, '%Y-%m') <= '$date2'
+GROUP BY `town`";
+    } else {
+        $sql = "SELECT `town`,COUNT(*) as `count` FROM `tbl_accounts`  WHERE `groups` = 1 GROUP BY `town`";
+    }
+    $data = $con->prepare($sql);
+    
+    $data->execute();
+    $rows = $data->fetchAll(PDO::FETCH_ASSOC);
+    return $rows;
+}
+function getGender($date1=null,$date2=null)
+{
+    $config = new config;
+    $con = $config->con();
+    if ($date1 !== null & $date2 !== null) {
+        $sql = "SELECT `gender`,COUNT(*) as `count` FROM `tbl_accounts` WHERE `groups` = 1 
+  AND DATE_FORMAT(`joined`, '%Y-%m') >= '$date1'
+  AND DATE_FORMAT(`joined`, '%Y-%m') <= '$date2'
+GROUP BY `gender`";
+    } else {
+        
+        $sql = "SELECT `gender`,COUNT(*) as `count` FROM `tbl_accounts` WHERE `groups` = 1 GROUP BY `gender`";
+    }
+    $data = $con->prepare($sql);
+    $data->execute();
+    $rows = $data->fetchAll(PDO::FETCH_ASSOC);
+    return $rows;
+}
+function getAge($date1=null,$date2=null)
+{
+    $config = new config;
+    $con = $config->con();
+    if ($date1 !== null & $date2 !== null) {
+        $sql = "SELECT `age`,COUNT(*) as `count` FROM `tbl_accounts` WHERE `groups` = 1 
+  AND DATE_FORMAT(`joined`, '%Y-%m') >= '$date1'
+  AND DATE_FORMAT(`joined`, '%Y-%m') <= '$date2'
+GROUP BY `age`";
+    } else {
+        $sql = "SELECT `age`,COUNT(*) as `count` FROM `tbl_accounts`  WHERE `groups` = 1 GROUP BY `age`";
+    }
+    $data = $con->prepare($sql);
+    $data->execute();
+    $rows = $data->fetchAll(PDO::FETCH_ASSOC);
+    return $rows;
+}
+function getAgeComplex($date1=null, $date2=null)
+{
+    $config = new config;
+    $con = $config->con();
+    if ($date1 !== null ) {
+        $sql = "SELECT DATE_FORMAT(joined, '%Y-%m') AS registration_month_year, SUM(CASE WHEN age BETWEEN 18 AND 24 THEN 1 ELSE 0 END) AS Young_Adult, SUM(CASE WHEN age BETWEEN 25 AND 29 THEN 1 ELSE 0 END) AS Twenties, SUM(CASE WHEN age BETWEEN 30 AND 39 THEN 1 ELSE 0 END) AS Thirties, SUM(CASE WHEN age BETWEEN 40 AND 49 THEN 1 ELSE 0 END) AS Forties, SUM(CASE WHEN age BETWEEN 50 AND 59 THEN 1 ELSE 0 END) AS Fifties, SUM(CASE WHEN age >= 60 THEN 1 ELSE 0 END) AS Seniors FROM tbl_accounts  WHERE DATE_FORMAT(joined, '%Y-%m') BETWEEN '$date1' AND '$date2' GROUP BY DATE_FORMAT(joined, '%Y-%m') ORDER BY DATE_FORMAT(joined, '%Y-%m')";
+    } else {
+        $sql = "SELECT DATE_FORMAT(joined, '%Y-%m') AS registration_month_year, SUM(CASE WHEN age BETWEEN 18 AND 24 THEN 1 ELSE 0 END) AS Young_Adult, SUM(CASE WHEN age BETWEEN 25 AND 29 THEN 1 ELSE 0 END) AS Twenties, SUM(CASE WHEN age BETWEEN 30 AND 39 THEN 1 ELSE 0 END) AS Thirties, SUM(CASE WHEN age BETWEEN 40 AND 49 THEN 1 ELSE 0 END) AS Forties, SUM(CASE WHEN age BETWEEN 50 AND 59 THEN 1 ELSE 0 END) AS Fifties, SUM(CASE WHEN age >= 60 THEN 1 ELSE 0 END) AS Seniors FROM tbl_accounts  GROUP BY DATE_FORMAT(joined, '%Y-%m') ORDER BY DATE_FORMAT(joined, '%Y-%m')";
+    }
+    $data = $con->prepare($sql);
+    $data->execute();
+    $rows = $data->fetchAll(PDO::FETCH_ASSOC);
+    return $rows;
+}
+function getGenderComplex($date1=null, $date2=null)
+{
+    $config = new config;
+    $con = $config->con();
+    if ($date1 !== null && $date2 !== null) {
+        $sql = "SELECT DATE_FORMAT(joined, '%Y-%m') AS registration_month_year, SUM(CASE WHEN gender = 'Male' THEN 1 ELSE 0 END) AS Male, SUM(CASE WHEN gender = 'Female' THEN 1 ELSE 0 END) AS Female, SUM(CASE WHEN gender = 'Other' THEN 1 ELSE 0 END) AS Other FROM tbl_accounts  WHERE DATE_FORMAT(joined, '%Y-%m') BETWEEN '$date1' AND '$date2' GROUP BY DATE_FORMAT(joined, '%Y-%m') ORDER BY DATE_FORMAT(joined, '%Y-%m');";
+    } else {
+        $sql = "SELECT DATE_FORMAT(joined, '%Y-%m') AS registration_month_year, SUM(CASE WHEN gender = 'Male' THEN 1 ELSE 0 END) AS Male, SUM(CASE WHEN gender = 'Female' THEN 1 ELSE 0 END) AS Female, SUM(CASE WHEN gender = 'Other' THEN 1 ELSE 0 END) AS Other FROM tbl_accounts GROUP BY DATE_FORMAT(joined, '%Y-%m') ORDER BY DATE_FORMAT(joined, '%Y-%m');";
+    }
+    $data = $con->prepare($sql);
+    $data->execute();
+    $rows = $data->fetchAll(PDO::FETCH_ASSOC);
+    return $rows;
+}
+function getGeoComplex($town=null)
+{
+    $config = new config;
+    $con = $config->con();
+    if ($town !== null ) {
+        $sql = "SELECT
+            town,
+            SUM(CASE WHEN gender = 'Male' THEN 1 ELSE 0 END) AS Male,
+            SUM(CASE WHEN gender = 'Female' THEN 1 ELSE 0 END) AS Female,
+            SUM(CASE WHEN gender NOT IN ('Male', 'Female') THEN 1 ELSE 0 END) AS Other
+        FROM
+            tbl_accounts
+        WHERE
+            town IS NOT NULL 
+            AND town = '$town'
+        GROUP BY
+            town
+        ORDER BY
+            town;";
+    } else {
+        $sql = "SELECT
+            town,
+            SUM(CASE WHEN gender = 'Male' THEN 1 ELSE 0 END) AS Male,
+            SUM(CASE WHEN gender = 'Female' THEN 1 ELSE 0 END) AS Female,
+            SUM(CASE WHEN gender NOT IN ('Male', 'Female') THEN 1 ELSE 0 END) AS Other
+        FROM
+            tbl_accounts
+        WHERE
+            town IS NOT NULL
+        GROUP BY
+            town
+        ORDER BY
+            town;";
+    }
+    $data = $con->prepare($sql);
+    $data->execute();
+    $rows = $data->fetchAll(PDO::FETCH_ASSOC);
+    return $rows;
+}
+function getPIAComplex($qid=null)
+{
+    $config = new config;
+    $con = $config->con();
+    if ($qid !== null ) {
+        $sql = "SELECT question_id, SUM(CASE WHEN answer_type = 'Correct' THEN count ELSE 0 END) AS correct_count, SUM(CASE WHEN answer_type = 'Incorrect' THEN count ELSE 0 END) AS incorrect_count FROM ( SELECT question_id, 'Correct' AS answer_type, COUNT(*) AS count FROM tbl_correct GROUP BY question_id UNION ALL SELECT question_id, 'Incorrect' AS answer_type, COUNT(*) AS count FROM tbl_incorrect GROUP BY question_id ) AS subquery WHERE `question_id` ='$qid' GROUP BY question_id";
+    } else {
+        $sql = "SELECT question_id, SUM(CASE WHEN answer_type = 'Correct' THEN count ELSE 0 END) AS correct_count, SUM(CASE WHEN answer_type = 'Incorrect' THEN count ELSE 0 END) AS incorrect_count FROM ( SELECT question_id, 'Correct' AS answer_type, COUNT(*) AS count FROM tbl_correct GROUP BY question_id UNION ALL SELECT question_id, 'Incorrect' AS answer_type, COUNT(*) AS count FROM tbl_incorrect GROUP BY question_id ) AS subquery GROUP BY question_id";
+    }
+    $data = $con->prepare($sql);
+    $data->execute();
+    $rows = $data->fetchAll(PDO::FETCH_ASSOC);
+    return $rows;
 }
  ?>

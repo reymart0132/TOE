@@ -39,28 +39,7 @@ class user{
         }
     }
 
-    public function createV($fields){
-        if($this->_db->insert('verifier',$fields)){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
-    public function createC($fields){
-        if($this->_db->insert('checker',$fields)){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    public function createR($fields){
-        if($this->_db->insert('releasedby',$fields)){
-            return true;
-        }else{
-            return false;
-        }
-    }
     public function find($user=null){
         if($user){
             $field=(is_numeric($user)) ? 'id' :'username';

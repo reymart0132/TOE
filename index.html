@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Builder</title>
+</head>
+<body>
+  <h1>Form Builder</h1>
+
+  <form id="questionForm">
+    <label for="questionText">Question Text:</label>
+    <input type="text" id="questionText" name="questionText" required>
+
+    <label for="choices">Choices (comma-separated):</label>
+    <input type="text" id="choices" name="choices" required>
+
+    <button type="button" onclick="addQuestion()">Add Question</button>
+  </form>
+
+  <div id="questionsList"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>
+
+

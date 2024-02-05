@@ -12,7 +12,7 @@ updateProfile();
  <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Registrar Portal</title>
+   <title>TESDA Examination Portal</title>
    <link rel="stylesheet" type="text/css"  href="vendor/css/bootstrap.min.css">
    <link href="vendor/css/all.css" rel="stylesheet">
    <link rel="stylesheet" type="text/css"  href="resource/css/styles.css">
@@ -22,22 +22,7 @@ updateProfile();
  </head>
  <body>
 
-         <nav class="navbar navbar-dark bg-white shadow-sm slide-in-left">
-           <a class="navbar-brand" href="https://malolos.ceu.edu.ph/">
-             <img src="resource/img/logo.jpg" height="70" class="d-inline-block align-top"
-               alt="mdb logo"><h3 class="ib">
-           </a>
-           <a href="exportTableAdmin.php"><i class="fas fa-table ceucolor"></i></a>
-           <a href="statsAdmin.php"><i class="fas fa-chart-line ceucolor"></i></a>
-           <a href="userVerificationAdmin.php"><i class="fas fa-user-plus ceucolor"></i></a>
-           <a href="verificationAdmin.php"><i class="fas fa-user-graduate ceucolor"></i></a>
-           <a href="viewAlumniAdmin.php"><i class="fa fa-graduation-cap ceucolor"></i></a>
-           <a href="nTransactionAdmin.php"><i class="fas fa-file-upload ceucolor"></i></a>
-           <a href="view_pending_requests.php"><i class="fas fa-home ceucolor"></i></a>
-              <a href="https:/www.facebook.com/theCEUofficial/"><i class="fab fa-facebook-f ceucolor"></i></a>
-              <a href="https://www.instagram.com/ceuofficial/"><i class="fab fa-instagram ceucolor"></i></a>
-              <a href="https://twitter.com/ceumalolos"><i class="fab fa-twitter ceucolor"></i></a>
-         </nav>
+        <?php require_once('menu/studentmenu.php'); ?>
 
          <div class="container mt-5  pt-5 puff-in-center">
              <div class="row">
@@ -51,16 +36,32 @@ updateProfile();
                         <td>
                             <div class="row justify-content-center">
                                 <div class="form-group col-4">
-                                 <label for = "username" class=""> Username:</label>
-                                 <input class="form-control"  type = "text" name="username" id="username" value ="<?php echo escape($user->data()->username); ?>" autocomplete="off"  />
+                                    <label for = "firstName" class=""> First Name</label>
+                                    <input class="form-control"  type = "text" name="firstName" id="firstName" value ="<?php echo escape($user->data()->fname); ?>"/required>
                                 </div>
                                 <div class="form-group col-4">
-                                 <label for = "fullName" class=""> Full Name</label>
-                                 <input class="form-control"  type = "text" name="fullName" id="fullName" value ="<?php echo escape($user->data()->name); ?>"/required>
+                                    <label for = "lastName" class=""> Last Name</label>
+                                    <input class="form-control"  type = "text" name="lastName" id="lastName" value ="<?php echo escape($user->data()->lname); ?>"/required>
                                 </div>
                                 <div class="form-group col-4">
-                                 <label for = "email" class=""> Email Address</label>
-                                 <input class="form-control"  type = "text" name="email" id="email" value ="<?php echo escape($user->data()->email); ?>"/required>
+                                    <label for = "middleName" class=""> Middle Name</label>
+                                    <input class="form-control"  type = "text" name="middleName" id="middleName" value ="<?php echo escape($user->data()->mname); ?>"/required>
+                                </div>
+                                <div class="form-group col-3">
+                                    <label for = "age" class=""> Age</label>
+                                    <input class="form-control"  type = "text" name="age" id="age" value ="<?php echo escape($user->data()->age); ?>"/required>
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for = "phone" class=""> Phone Number</label>
+                                    <input class="form-control"  type = "text" name="phone" id="phone" value ="<?php echo escape($user->data()->phone); ?>"/required>
+                                </div>
+                                <div class="form-group col-5">
+                                    <label for = "email" class=""> Email Address</label>
+                                    <input class="form-control"  type = "text" name="email" id="email" value ="<?php echo escape($user->data()->email); ?>"/required>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for = "fullAddress" class=""> Full Address</label>
+                                 <input class="form-control"  type = "text" name="faddress" id="faddress" value ="<?php echo escape($user->data()->faddress); ?>"/required>
                                 </div>
                              </div>
                         </td>
@@ -68,11 +69,17 @@ updateProfile();
                     <tr>
                         <td>
                             <div class="row justify-content-center">
-                                <div class="form-group col-5">
-                                  <label for="College" >College/s to handle</label>
-                                      <select id="College" name="College[]" class="selectpicker form-control" data-live-search="true" multiple required>
+                                <div class="form-group col-6">
+                                  <label for="College" >Course to Take</label>
+                                      <select id="College" name="College[]" class="selectpicker form-control" data-live-search="true" required>
                                         <?php $view->collegeSP2();?>
                                       </select>
+                                </div>
+                                 <div class="form-group col-6">
+                                 <label for = "town" class="">Town</label>
+                                <select id="town" name="town" class="selectpicker form-control" data-live-search="true" required>
+                                    <?php $view->townSP(); ?>
+                                    </select>
                                 </div>
                                 <div class="form-group col-5">
                                     <label  >&nbsp;</label>
@@ -84,7 +91,7 @@ updateProfile();
                     </tr>
                 </table>
              </form>
-             <form action="updatepropic.php" method="post" enctype="multipart/form-data">
+             <!-- <form action="updatepropic.php" method="post" enctype="multipart/form-data">
                  <table class="table">
                      <tr>
                          <td>
@@ -101,21 +108,9 @@ updateProfile();
                          </td>
                      </tr>
                  </table>
-              </form>
+              </form> -->
          </div>
  </body>
- <footer id="sticky-footer" class="py-4 bg-dark text-white-50 fixed-bottom  slide-in-right">
-   <div class="container text-center">
-       <div class="row">
-           <div class="col col-sm-5 text-left">
-               <small>Copyright &copy;Centro Escolar University     Office of the Registrar 2019</small>
-           </div>
-           <div class="col text-right">
-               <small>Created by: Reymart Bolasoc, Amelia Valencia , James Mangalile, Kenneth De Leon , Pamela Reyes , Ellen Mijares</small>
-           </div>
-       </div>
-   </div>
- </footer>
      <script src="vendor/js/jquery.js"></script>
      <script src="vendor/js/popper.js"></script>
      <script src="vendor/js/bootstrap.min.js"></script>
